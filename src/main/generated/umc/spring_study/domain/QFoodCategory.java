@@ -31,6 +31,8 @@ public class QFoodCategory extends EntityPathBase<FoodCategory> {
 
     public final StringPath name = createString("name");
 
+    public final ListPath<Store, QStore> storeList = this.<Store, QStore>createList("storeList", Store.class, QStore.class, PathInits.DIRECT2);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
