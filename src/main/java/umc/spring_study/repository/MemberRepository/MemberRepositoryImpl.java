@@ -57,16 +57,16 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     }
 
     @Override
-    public List<MemberResponseDTO.ChallengebleMissionDTO> findChallengebleMissions(Long userId, String regionName, int offset, int limit) {
+    public List<MemberResponseDTO.ChallengeableMissionDTO> findChallengebleMissions(Long userId, String regionName, int offset, int limit) {
 
         JPQLQuery<Long> completedMissionSubquery = JPAExpressions
                 .select(memberMission.mission.id)
                 .from(memberMission)
                 .where(memberMission.member.id.eq(userId).and(memberMission.status.eq(MissionStatus.COMPLETE)));
 
-        List<MemberResponseDTO.ChallengebleMissionDTO> result =
+        List<MemberResponseDTO.ChallengeableMissionDTO> result =
                 queryFactory
-                        .select(Projections.constructor(MemberResponseDTO.ChallengebleMissionDTO.class,
+                        .select(Projections.constructor(MemberResponseDTO.ChallengeableMissionDTO.class,
                                 store.name,
                                 foodCategory.name,
                                 mission.missionSpec,
@@ -89,5 +89,20 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                         .fetch();
         return result;
 
+    }
+
+    @Override
+    public MemberResponseDTO.MemberInfoDTO getMemberInfoById(Long memberId) {
+        return queryFactory
+                .select(Projections.constructor(MemberResponseDTO.MemberInfoDTO.class,
+                        member.id,
+                        member.name,
+                        member.email,
+                        member.phone,
+                        member.point
+                ))
+                .from(member)
+                .where(member.id.eq(memberId))
+                .fetchOne(); // 단일 조회
     }
 }

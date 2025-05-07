@@ -16,16 +16,30 @@ public class MemberResponseDTO {
         Integer point;
         Integer myMissionSuccessCount;
     }
+
     @Schema(description="사용자 홈화면 - 참여가능한 미션")
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class ChallengebleMissionDTO {
+    public static class ChallengeableMissionDTO {
         String storeName;
         String foodCategoryName;
         String missionSpec;
         Integer reward;
         Integer deadline;
+    }
+
+    @Schema(description="사용자 홈화면 - 참여가능한 미션")
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class MemberInfoDTO {
+        Long userId;
+        String userName;
+        String email;
+        String phoneNumber;
+        Integer point;
     }
 }
