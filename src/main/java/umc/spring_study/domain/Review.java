@@ -31,4 +31,15 @@ public class Review extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", score=" + score +
+                ", region=" + (member != null ? member.getName() : "N/A") + // region의 이름 출력
+                '}';
+    }
 }

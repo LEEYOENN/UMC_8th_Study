@@ -19,10 +19,6 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
     QReview review = QReview.review;
     QStore store = QStore.store;
     QMember member = QMember.member;
-    @Override
-    public void CreateReview(Review review) {
-
-    }
 
     @Override
     public List<ReviewResponseDTO.ReviewDetailDTO> findReviewsByStoreId(Long storeId, int offset, int limit) {

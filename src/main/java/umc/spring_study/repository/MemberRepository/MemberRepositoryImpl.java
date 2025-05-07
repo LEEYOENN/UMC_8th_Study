@@ -57,7 +57,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     }
 
     @Override
-    public List<MemberResponseDTO.ChallengeableMissionDTO> findChallengebleMissions(Long userId, String regionName, int offset, int limit) {
+    public List<MemberResponseDTO.ChallengeableMissionDTO> findChallengeableMissions(Long userId, String regionName, int offset, int limit) {
 
         JPQLQuery<Long> completedMissionSubquery = JPAExpressions
                 .select(memberMission.mission.id)

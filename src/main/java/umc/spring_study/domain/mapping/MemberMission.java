@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import umc.spring_study.domain.Member;
 import umc.spring_study.domain.Mission;
+import umc.spring_study.domain.common.BaseEntity;
 import umc.spring_study.domain.enums.MissionStatus;
 
 @Entity
@@ -11,7 +12,7 @@ import umc.spring_study.domain.enums.MissionStatus;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class MemberMission {
+public class MemberMission extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,4 +28,14 @@ public class MemberMission {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mission_id")
     private Mission mission;
+
+    @Override
+    public String toString() {
+        return "MemberMission{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                //", store=" + (member != null ? member.getName() : "N/A") + // region의 이름 출력
+                //", store=" + (mission != null ? mission.getStore().getName() : "N/A") + // region의 이름 출력
+                '}';
+    }
 }

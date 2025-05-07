@@ -27,7 +27,7 @@ public class MemberResponseDTO {
         String foodCategoryName;
         String missionSpec;
         Integer reward;
-        Integer deadline;
+        Long deadline;
     }
 
     @Schema(description="사용자 홈화면 - 참여가능한 미션")
