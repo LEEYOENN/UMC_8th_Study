@@ -9,7 +9,7 @@ public class TestConverter {
                 .testString("This is a test")
                 .build();
     }
-    public static TempResponseDTO.TempExceptionDTO tpTempExceptionDTO(Integer flag){
+    public static TempResponseDTO.TempExceptionDTO toTempExceptionDTO(Integer flag){
         return TempResponseDTO.TempExceptionDTO.builder()
                 .flag(flag)
                 .build();
