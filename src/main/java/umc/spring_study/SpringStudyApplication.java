@@ -3,6 +3,7 @@ package umc.spring_study;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -11,9 +12,13 @@ import umc.spring_study.service.MemberService.MemberQueryService;
 import umc.spring_study.service.ReviewService.ReviewQueryService;
 import umc.spring_study.service.StoreService.StoreQueryService;
 
+
 @SpringBootApplication
 @EnableJpaAuditing
+@EnableFeignClients(basePackages = "umc.spring_study.web.discord")
 public class SpringStudyApplication {
+
+	private static final String WEBHOOK_URL = System.getenv("DISCORD_WEBHOOK_URL");;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringStudyApplication.class, args);
@@ -69,6 +74,8 @@ public class SpringStudyApplication {
 			System.out.println("\n=== Member Missions ===");
 			memberMissionService.getMyMissions(memberId, status)
 					.forEach(System.out::println);
+
+			System.out.println("Webhook URL: " + WEBHOOK_URL);
 
 		};
 	}

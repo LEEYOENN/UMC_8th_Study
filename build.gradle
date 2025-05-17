@@ -37,8 +37,16 @@ dependencies {
 	// openapi
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 	implementation 'org.springdoc:springdoc-openapi-data-rest:1.6.9'
-    //test
+	//Feign Client
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+dependencyManagement {
+
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2022.0.4"
+	}
 }
 
 sourceSets {
