@@ -3,6 +3,8 @@ package umc.spring_study.web.dto.MemberDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 public class MemberResponseDTO {
 
     @Schema(description="사용자 홈화면")
@@ -41,5 +43,15 @@ public class MemberResponseDTO {
         String email;
         String phoneNumber;
         Integer point;
+    }
+
+    @Schema(description="사용자 회원가입 - 회원가입 정보")
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class SignupResultDTO{
+        Long userId;
+        LocalDateTime createdAt;
     }
 }
