@@ -19,12 +19,9 @@ public class MemberRestController {
 
     @PostMapping("/signup")
     public ApiResponse<MemberResponseDTO.SignupResultDTO> signup(@RequestBody @Valid MemberRequestDTO.SignupDto request) {
-        System.out.println("===> name: " + request.getName());
-        System.out.println("===> gender: " + request.getGender());
-        System.out.println("===> address: " + request.getAddress());
-        System.out.println("===> specAddress: " + request.getSpecAddress());
-        System.out.println("===> phone: " + request.getPhone());
+
         return ApiResponse.onSuccess(memberCommandService.signupMember(request));
     }
+
 
 }
