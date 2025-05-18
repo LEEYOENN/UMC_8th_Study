@@ -5,10 +5,7 @@ import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -16,9 +13,9 @@ public class ReviewRequestDTO {
 
     @Schema(description="가게의 리뷰")
     @Getter
+    @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    @Builder
     public static class CreateDTO{
         @NotNull
         Long storeId;
