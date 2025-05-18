@@ -2,6 +2,7 @@ package umc.spring_study.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import umc.spring_study.converter.ReviewConverter;
 import umc.spring_study.domain.Member;
 import umc.spring_study.domain.Review;
@@ -39,6 +40,7 @@ public class ReviewCommandServiceImpl implements ReviewCommandService {
     }
 
     @Override
+    @Transactional
     public ReviewResponseDTO.CreateResultDTO createReview(ReviewRequestDTO.CreateDTO request) {
         Member member = memberRepository.findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException("Member Not Found"));
