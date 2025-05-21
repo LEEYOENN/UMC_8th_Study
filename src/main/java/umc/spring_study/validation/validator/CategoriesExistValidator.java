@@ -17,6 +17,7 @@ import java.util.List;
 public class CategoriesExistValidator implements ConstraintValidator<ExistCategories, List<Long>> {
 
     private final FoodCategoryQueryService foodCategoryQueryService;
+
     @Override
     public void initialize(ExistCategories constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
