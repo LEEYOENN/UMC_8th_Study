@@ -1,10 +1,26 @@
 package umc.spring_study.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import umc.spring_study.apiPayload.code.status.ErrorStatus;
+import umc.spring_study.apiPayload.exception.handler.MemberHandler;
+import umc.spring_study.converter.MemberConverter;
+import umc.spring_study.converter.ReviewConverter;
+import umc.spring_study.converter.StoreConverter;
+import umc.spring_study.domain.Member;
+import umc.spring_study.domain.Review;
+import umc.spring_study.domain.enums.MissionStatus;
+import umc.spring_study.domain.mapping.MemberMission;
+import umc.spring_study.repository.MemberMissionRepository.MemberMissionRepository;
 import umc.spring_study.repository.MemberRepository.MemberRepository;
+import umc.spring_study.repository.ReviewRepository.ReviewRepository;
 import umc.spring_study.web.dto.MemberDTO.MemberResponseDTO;
+import umc.spring_study.web.dto.MissionDTO.MissionResponseDTO;
+import umc.spring_study.web.dto.ReviewDTO.ReviewResponseDTO;
 
 import java.util.List;
 
@@ -13,6 +29,8 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MemberQueryServiceImpl implements MemberQueryService {
     private final MemberRepository memberRepository;
+    private final MemberMissionRepository memberMissionRepository;
+    private final ReviewRepository reviewRepository;
 
     /**
      * 회원 홈 화면 정보 조회
@@ -45,6 +63,26 @@ public class MemberQueryServiceImpl implements MemberQueryService {
         System.out.println(memberInfo.getUserId() +" "+ memberInfo.getUserName() + " "+ memberInfo.getEmail() );
 
         return memberInfo;
+    }
+
+    @Override
+    public ReviewResponseDTO.ReviewPreviewListDTO getMemberReviewList(Long memberId, Integer page) {
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+        Page<Review> reviewPage = reviewRepository.findAllByMember(member, PageRequest.of(page - 1, 10, Sort.by("createdAt").descending()));
+
+        return ReviewConverter.toReviewPreviewListDTO(reviewPage);
+    }
+
+    @Override
+    public MissionResponseDTO.MissionPreviewListDTO getMemberChallengingMissionList(Long memberId, Integer page) {
+
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+        Page<MemberMission> memberMissionPage = memberMissionRepository.findAllByMemberAndStatus(member, MissionStatus.CHALLENGING, PageRequest.of(page - 1, 10, Sort.by("createdAt").descending()));
+
+        return MemberConverter.toMissionPreviewListDTO(memberMissionPage);
     }
 }
 

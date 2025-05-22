@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface MemberMissionQueryService {
     List<MemberMission> getMyMissions(Long memberId, String status);
+
 }
