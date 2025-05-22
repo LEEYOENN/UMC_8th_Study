@@ -5,16 +5,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.spring_study.apiPayload.code.status.ErrorStatus;
 import umc.spring_study.apiPayload.exception.handler.MemberHandler;
+import umc.spring_study.apiPayload.exception.handler.MemberMissionHandler;
 import umc.spring_study.apiPayload.exception.handler.MissionHandler;
 import umc.spring_study.converter.MemberMissionConverter;
 import umc.spring_study.domain.Member;
 import umc.spring_study.domain.Mission;
+import umc.spring_study.domain.enums.MissionStatus;
 import umc.spring_study.domain.mapping.MemberMission;
 import umc.spring_study.repository.MemberMissionRepository.MemberMissionRepository;
 import umc.spring_study.repository.MemberRepository.MemberRepository;
 import umc.spring_study.repository.MissionRepository.MissionRepository;
 import umc.spring_study.web.dto.MemberMissionDTO.MemberMissionRequestDTO;
 import umc.spring_study.web.dto.MemberMissionDTO.MemberMissionResponseDTO;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +46,15 @@ public class MemberMissionCommandServiceImpl implements MemberMissionCommandServ
         MemberMission newMemberMission = MemberMissionConverter.toMemberMission(member, mission);
 
         return MemberMissionConverter.toChallengeResultDTO(memberMissionRepository.save(newMemberMission));
+    }
+
+    @Override
+    public MemberMissionResponseDTO.MemberMissionCompleteResultDTO completeMemberMission(MemberMissionRequestDTO.MemberMissionCompleteDTO request) {
+        MemberMission mm = memberMissionRepository.findById(request.getMemberMissionId())
+                .orElseThrow(() -> new MemberMissionHandler(ErrorStatus.MEMBER_MISSION_NOT_FOUND));
+
+        mm.setStatus(MissionStatus.COMPLETE);
+        mm.setUpdatedAt(LocalDateTime.now());
+        return MemberMissionConverter.toMemberMissionCompleteResultDTO(mm);
     }
 }

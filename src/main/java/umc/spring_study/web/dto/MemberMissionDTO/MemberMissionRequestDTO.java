@@ -21,4 +21,15 @@ public class MemberMissionRequestDTO {
         private Long missionId;
 
     }
+
+    @Schema(description="사용자 미션 도전성공 요청 DTO")
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class MemberMissionCompleteDTO {
+        @NotNull
+        private Long memberMissionId;
+
+    }
 }
