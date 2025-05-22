@@ -21,7 +21,10 @@ public class MemberMissionRestController {
     public ApiResponse<MemberMissionResponseDTO.ChallengeResultDTO> challengeMission(@RequestBody @Valid MemberMissionRequestDTO.ChallengeMissionDTO request) {
         return ApiResponse.onSuccess(memberMissionCommandService.challengeMission(request));
     }
-    //멤버 미션테이블에서 특정 미션 상태를 진행완료로 변경
+
+    /*
+     * 멤버 미션테이블에서 특정 미션 상태를 진행완료로 변경
+     * */
     @PatchMapping("/complete")
     @Operation(summary = "멤버미션 상태를 진행완료 변경 API", description = "사용자의 특정 미션상태를 진행완료 변경하는 API입니다.")
     @ApiResponses({
@@ -32,3 +35,4 @@ public class MemberMissionRestController {
     }
 
 }
+

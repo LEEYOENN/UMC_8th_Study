@@ -6,16 +6,19 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import umc.spring_study.apiPayload.ApiResponse;
 import umc.spring_study.service.MemberService.MemberCommandService;
 import umc.spring_study.service.MemberService.MemberQueryService;
+import umc.spring_study.validation.annotation.ValidPage;
 import umc.spring_study.web.dto.MemberDTO.MemberRequestDTO;
 import umc.spring_study.web.dto.MemberDTO.MemberResponseDTO;
 import umc.spring_study.web.dto.MemberMissionDTO.MemberMissionResponseDTO;
 import umc.spring_study.web.dto.MissionDTO.MissionResponseDTO;
 import umc.spring_study.web.dto.ReviewDTO.ReviewResponseDTO;
 
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/members")
@@ -28,7 +31,9 @@ public class MemberRestController {
 
         return ApiResponse.onSuccess(memberCommandService.signupMember(request));
     }
-
+    /*
+     * 특정 멤버가 쓴 리뷰 목록 조회
+     * */
     @GetMapping("/{memberId}/reviews")
     @Operation(summary = "특정 멤버의 리뷰 가져오기 API", description = "사용자의 리뷰를 페이징으로 10개 가져옵니다.")
     @ApiResponses({
@@ -39,11 +44,13 @@ public class MemberRestController {
             @Parameter(name = "page", description = "페이지 번호(1부터 시작)", example = "1")
     })
     public ApiResponse<ReviewResponseDTO.ReviewPreviewListDTO> getMemberReviewList(@PathVariable(name = "memberId") Long memberId,
-                                                                                   @RequestParam(name = "page", defaultValue = "1") Integer page ) {
+                                                                                   @ValidPage @RequestParam(name = "page", defaultValue = "1") Integer page ) {
 
         return ApiResponse.onSuccess(memberQueryService.getMemberReviewList(memberId, page));
     }
-
+    /*
+    * 특정 멤버의 진행중인 미션 목록 조회
+    * */
     @GetMapping("/{memberId}/missions")
     @Operation(summary = "특정 멤버의 진행중인 미션 목록 API", description = "사용자가 진행중인 미션을 페이징으로 10개 가져옵니다.")
     @ApiResponses({
@@ -54,7 +61,7 @@ public class MemberRestController {
             @Parameter(name = "page", description = "페이지 번호(1부터 시작)", example = "1")
     })
     public ApiResponse<MissionResponseDTO.MissionPreviewListDTO> getMemberChallengingMissionList(@PathVariable(name = "memberId") Long memberId,
-                                                                                                 @RequestParam(name = "page", defaultValue = "1") Integer page){
+                                                                                                 @ValidPage @RequestParam(name = "page", defaultValue = "1") Integer page){
         return ApiResponse.onSuccess(memberQueryService.getMemberChallengingMissionList(memberId, page));
     }
 }
