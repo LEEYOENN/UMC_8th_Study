@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 public class MemberMissionResponseDTO {
     @Schema(description="가게의 미션 도전 결과")
     @Getter
@@ -18,4 +16,6 @@ public class MemberMissionResponseDTO {
         Long userId;
         Long missionId;
     }
+
+
 }
