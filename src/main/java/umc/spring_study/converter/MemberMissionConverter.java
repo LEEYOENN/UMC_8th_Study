@@ -24,4 +24,12 @@ public class MemberMissionConverter {
                 .build();
     }
 
+    public static MemberMissionResponseDTO.MemberMissionCompleteResultDTO toMemberMissionCompleteResultDTO(MemberMission mm) {
+        return MemberMissionResponseDTO.MemberMissionCompleteResultDTO.builder()
+                .userId(mm.getMember().getId())
+                .memberMissionId(mm.getMission().getId())
+                .missionStatus(String.valueOf(mm.getStatus()))
+                .updatedAt(mm.getUpdatedAt())
+                .build();
+    }
 }
