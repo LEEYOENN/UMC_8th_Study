@@ -1,11 +1,13 @@
 package umc.spring_study.web.dto.MemberDTO;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.stereotype.Service;
+import umc.spring_study.domain.enums.Role;
 import umc.spring_study.validation.annotation.ExistCategories;
 
 import java.util.ArrayList;
@@ -22,16 +24,31 @@ public class MemberRequestDTO {
     public static class SignupDto {
         @NotBlank
         private String name;
+
         @NotNull
         private int gender;
+
+        @NotBlank
+        @Email
+        private String email;
+
+        @NotBlank
+        private String password;
+
+        @NotNull
+        private Role role;
+
         @NotNull
         @Size(min = 5, max = 40)
         private String address;
+
         @NotNull
         @Size(min = 5, max = 40)
         private String specAddress;
+
         @NotNull
         private String phone;
+
         @ExistCategories
         private List<Long> preferCategoryList = new ArrayList<>();
     }
