@@ -49,6 +49,15 @@ public class MemberRequestDTO {
         @NotNull
         private String phone;
 
+        @NotNull
+        private Integer birthYear;
+
+        @NotNull
+        private Integer birthMonth;
+
+        @NotNull
+        private Integer birthDay;
+
         @ExistCategories
         private List<Long> preferCategoryList = new ArrayList<>();
     }
