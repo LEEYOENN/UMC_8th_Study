@@ -3,6 +3,8 @@ package umc.spring_study.repository.MemberRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import umc.spring_study.domain.Member;
 
-public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+import java.util.Optional;
 
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+    Optional<Member> findByEmail(String email);
 }
