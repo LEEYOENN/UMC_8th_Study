@@ -1,6 +1,7 @@
 package umc.spring_study.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.spring_study.apiPayload.code.status.ErrorStatus;
@@ -25,12 +26,15 @@ public class MemberCommandServiceImpl implements MemberCommandService {
 
     private final MemberRepository memberRepository;
     private final FoodCategoryRepository foodCategoryRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
     public MemberResponseDTO.SignupResultDTO signupMember(MemberRequestDTO.SignupDto request) {
 
         Member newMember = MemberConverter.toMember(request);
+        // 비밀번호 암호화
+        newMember.encodePassword(passwordEncoder.encode(request.getPassword()));
         //FoodCategoryList 처리
         //signupDTO에 있는 foodCategoryList 객체를 stream map함수를 통해 foodCategory 객체 리스트로 만듦
         List<FoodCategory> foodCategoryList = request.getPreferCategoryList().stream()
