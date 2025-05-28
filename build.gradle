@@ -41,6 +41,9 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-data-rest:1.6.9'
 	//Feign Client
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	//security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
 	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
