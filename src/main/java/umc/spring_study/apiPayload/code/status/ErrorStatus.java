@@ -31,7 +31,11 @@ public enum ErrorStatus implements BaseErrorCode{
     // 멤버미션
     MEMBER_MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBERMISSION4004", "해당 멤버미션이 존재하지 않습니다."),
     //페이지
-    PAGE_NOT_VALID(HttpStatus.BAD_REQUEST, "PAGE4001", "페이지는 1이상의 숫자여야 합니다.");
+    PAGE_NOT_VALID(HttpStatus.BAD_REQUEST, "PAGE4001", "페이지는 1이상의 숫자여야 합니다."),
+    //jwt 토큰
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "TOKEN4003", "유효하지 않은 토큰입니다."),
+    // 비밀번호
+    INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "PASSWORD4001", "비밀번호가 잘못되었습니다." );
 
     private HttpStatus httpStatus;
     private String code;

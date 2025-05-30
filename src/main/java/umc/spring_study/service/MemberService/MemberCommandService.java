@@ -7,4 +7,6 @@ import umc.spring_study.web.dto.MemberDTO.MemberResponseDTO;
 public interface MemberCommandService {
 
     MemberResponseDTO.SignupResultDTO signupMember(MemberRequestDTO.SignupDto request);
+
+    MemberResponseDTO.LoginResultDTO loginMember(MemberRequestDTO.LoginRequestDTO request);
 }

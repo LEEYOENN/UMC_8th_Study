@@ -1,5 +1,6 @@
 package umc.spring_study.service.MemberService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import umc.spring_study.domain.Review;
 import umc.spring_study.web.dto.MemberDTO.MemberResponseDTO;
 import umc.spring_study.web.dto.MissionDTO.MissionResponseDTO;
@@ -21,7 +22,7 @@ public interface MemberQueryService {
     /**
      * 회원 기본 정보 조회
      */
-    MemberResponseDTO.MemberInfoDTO getMemberInfo(Long memberId);
+    MemberResponseDTO.InfoResultDTO getMemberInfo(HttpServletRequest request);
 
     /**
      * 회원이 작성한 리뷰 목록 가져오기 - 페이징
