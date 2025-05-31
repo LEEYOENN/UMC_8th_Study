@@ -1,13 +1,16 @@
 package umc.spring_study.service.MemberService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.spring_study.apiPayload.code.status.ErrorStatus;
 import umc.spring_study.apiPayload.exception.handler.MemberHandler;
+import umc.spring_study.config.security.jwt.JwtTokenProvider;
 import umc.spring_study.converter.MemberConverter;
 import umc.spring_study.converter.ReviewConverter;
 import umc.spring_study.converter.StoreConverter;
@@ -31,6 +34,7 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     private final MemberRepository memberRepository;
     private final MemberMissionRepository memberMissionRepository;
     private final ReviewRepository reviewRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     /**
      * 회원 홈 화면 정보 조회
@@ -54,16 +58,28 @@ public class MemberQueryServiceImpl implements MemberQueryService {
         return missions;
     }
 
+    @Override
+    public MemberResponseDTO.InfoResultDTO getMemberInfo(HttpServletRequest request) {
+        Authentication authentication = jwtTokenProvider.extractAuthentication(request);
+        String email = authentication.getName();
+
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+
+        return MemberConverter.toInfoResultDTO(member);
+    }
+
     /**
      * 회원 기본 정보 조회
      */
-    public MemberResponseDTO.MemberInfoDTO getMemberInfo(Long memberId) {
-        MemberResponseDTO.MemberInfoDTO memberInfo = memberRepository.getMemberInfoById(memberId);
+//    public MemberResponseDTO.MemberInfoDTO getMemberInfo(Long memberId) {
+//        MemberResponseDTO.MemberInfoDTO memberInfo = memberRepository.getMemberInfoById(memberId);
+//
+//        System.out.println(memberInfo.getUserId() +" "+ memberInfo.getUserName() + " "+ memberInfo.getEmail() );
+//
+//        return memberInfo;
+//    }
 
-        System.out.println(memberInfo.getUserId() +" "+ memberInfo.getUserName() + " "+ memberInfo.getEmail() );
-
-        return memberInfo;
-    }
 
     @Override
     public ReviewResponseDTO.ReviewPreviewListDTO getMemberReviewList(Long memberId, Integer page) {

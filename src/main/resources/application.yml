@@ -17,5 +17,10 @@ spring:
         hbm2ddl:
           auto: update
         default_batch_fetch_size: 1000
+jwt:
+  token:
+    secretKey: umceightfightingjwttokenauthentication
+    expiration:
+      access: 14400000
 monitoring:
   webhook-url: https://discord.com/api/webhooks/1370711644438794343/KEtcqTBiAzQ6W3d7wxkhnBDFL2tWV83Gzg6vHwUcPDm1KlVDZGfV-b3UbvVzMUnTDC8S

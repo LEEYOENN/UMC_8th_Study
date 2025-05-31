@@ -76,4 +76,19 @@ public class MemberConverter {
                 .status(String.valueOf(memberMission.getStatus()))
                 .build();
     }
+
+    public static MemberResponseDTO.LoginResultDTO toLoginResultDTO(Long id, String accessToken) {
+        return MemberResponseDTO.LoginResultDTO.builder()
+                .memberId(id)
+                .accessToken(accessToken)
+                .build();
+    }
+
+    public static MemberResponseDTO.InfoResultDTO toInfoResultDTO(Member member) {
+        return MemberResponseDTO.InfoResultDTO.builder()
+                .name(member.getName())
+                .email(member.getEmail())
+                .gender(String.valueOf(member.getGender()))
+                .build();
+    }
 }

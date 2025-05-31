@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
@@ -29,30 +31,29 @@ public class MemberRestController {
     private final MemberQueryService memberQueryService;
 
 
-    // thymeleaf 사용을 위해 일부가 변경되었습니다.
-    // 실제로는 8주차에서 작성한 컨트롤러와 동일하게 작성하시면 됩니다!!
-//    @PostMapping("/signup")
-//    public String joinMember(@ModelAttribute("memberJoinDto") MemberRequestDTO.SignupDto request, // 협업시에는 기존 RequestBody 어노테이션을 붙여주시면 됩니다!
-//                             BindingResult bindingResult,
-//                             Model model) {
-//        if (bindingResult.hasErrors()) {
-//            // 뷰에 데이터 바인딩이 실패할 경우 signup 페이지를 유지합니다.
-//            return "signup";
-//        }
-//
-//        try {
-//            memberCommandService.signupMember(request);
-//            return "redirect:/login";
-//        } catch (Exception e) {
-//            // 회원가입 과정에서 에러가 발생할 경우 에러 메시지를 보내고, signup 페이디를 유지합니다.
-//            model.addAttribute("error", e.getMessage());
-//            return "signup";
-//        }
-//    }
+
     @PostMapping("/signup")
     public ApiResponse<MemberResponseDTO.SignupResultDTO> signup(@RequestBody @Valid MemberRequestDTO.SignupDto request) {
 
         return ApiResponse.onSuccess(memberCommandService.signupMember(request));
+    }
+    /*
+     * 로그인
+     * */
+    @PostMapping("/login")
+    @Operation(summary = "유저 로그인 AP", description = "유저가 로그인하는 API 입니다.")
+    public ApiResponse<MemberResponseDTO.LoginResultDTO> login(@RequestBody @Valid MemberRequestDTO.LoginRequestDTO request){
+        return ApiResponse.onSuccess(memberCommandService.loginMember(request));
+    }
+    /*
+     * 로그인
+     * */
+    @GetMapping("/info")
+    @Operation(summary = "유저 내 정보 조회 API - Authorization 필요",
+    description = "유저가 내 정보를 조회하는 API 입니다.",
+    security = { @SecurityRequirement(name = "JWT TOKEN")})
+    public ApiResponse<MemberResponseDTO.InfoResultDTO> getMyInfo(HttpServletRequest request){
+        return ApiResponse.onSuccess(memberQueryService.getMemberInfo(request));
     }
     /*
      * 특정 멤버가 쓴 리뷰 목록 조회

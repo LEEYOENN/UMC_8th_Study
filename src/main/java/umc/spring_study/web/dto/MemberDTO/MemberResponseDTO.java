@@ -54,4 +54,23 @@ public class MemberResponseDTO {
         Long userId;
         LocalDateTime createdAt;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class LoginResultDTO{
+        Long memberId;
+        String accessToken;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class InfoResultDTO{
+        String name;
+        String email;
+        String gender;
+    }
 }
