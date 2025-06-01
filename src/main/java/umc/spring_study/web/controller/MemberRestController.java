@@ -8,11 +8,16 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import umc.spring_study.apiPayload.ApiResponse;
+import umc.spring_study.apiPayload.code.status.ErrorStatus;
+import umc.spring_study.apiPayload.exception.handler.MemberHandler;
+import umc.spring_study.config.security.jwt.JwtTokenProvider;
 import umc.spring_study.service.MemberService.MemberCommandService;
 import umc.spring_study.service.MemberService.MemberQueryService;
 import umc.spring_study.validation.annotation.ValidPage;
@@ -29,7 +34,7 @@ import umc.spring_study.web.dto.ReviewDTO.ReviewResponseDTO;
 public class MemberRestController {
     private final MemberCommandService memberCommandService;
     private final MemberQueryService memberQueryService;
-
+    private final JwtTokenProvider jwtTokenProvider;
 
 
     @PostMapping("/signup")
@@ -46,7 +51,28 @@ public class MemberRestController {
         return ApiResponse.onSuccess(memberCommandService.loginMember(request));
     }
     /*
-     * 로그인
+     * 리프레시토큰 사용 로그인
+     * */
+    @PostMapping("/reissue")
+    @Operation(summary = "토큰 재발급 API", description = "Refresh Token으로 Access Token을 재발급하는 API입니다.")
+    public ResponseEntity<ApiResponse<MemberResponseDTO.TokenReissueResultDTO>> reissue(@RequestBody MemberRequestDTO.TokenReissueDTO request){
+        String refreshToken = request.getRefreshToken();
+
+        if(!jwtTokenProvider.validateToken(refreshToken)) {
+            throw new MemberHandler(ErrorStatus.INVALID_TOKEN);
+        }
+
+        Authentication authentication = jwtTokenProvider.getAuthentication(refreshToken);
+        String newAccessToken = jwtTokenProvider.generateToken(authentication);
+
+        MemberResponseDTO.TokenReissueResultDTO response = MemberResponseDTO.TokenReissueResultDTO.builder()
+                .accessToken(newAccessToken)
+                .build();
+        return ResponseEntity.ok(ApiResponse.onSuccess(response));
+    }
+
+    /*
+     * 내정보 조회
      * */
     @GetMapping("/info")
     @Operation(summary = "유저 내 정보 조회 API - Authorization 필요",
