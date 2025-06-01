@@ -43,6 +43,16 @@ public class JwtTokenProvider{
                 .compact();
     }
 
+    public String generateRefreshToken(Authentication authentication) {
+        String email = authentication.getName();
+
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getExpiration().getRefresh()))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()

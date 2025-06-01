@@ -72,4 +72,10 @@ public class MemberRequestDTO {
         @NotBlank(message = "패스워드는 필수입니다.")
         private String password;
     }
+
+    @Getter
+    @Setter
+    public static class TokenReissueDTO {
+    private String refreshToken;
+    }
 }

@@ -2,7 +2,6 @@ package umc.spring_study.converter;
 
 import org.springframework.data.domain.Page;
 import umc.spring_study.domain.Member;
-import umc.spring_study.domain.Mission;
 import umc.spring_study.domain.enums.Gender;
 import umc.spring_study.domain.mapping.MemberMission;
 import umc.spring_study.web.dto.MemberDTO.MemberRequestDTO;
@@ -77,10 +76,11 @@ public class MemberConverter {
                 .build();
     }
 
-    public static MemberResponseDTO.LoginResultDTO toLoginResultDTO(Long id, String accessToken) {
+    public static MemberResponseDTO.LoginResultDTO toLoginResultDTO(Long id, String accessToken, String refreshToken) {
         return MemberResponseDTO.LoginResultDTO.builder()
                 .memberId(id)
                 .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 

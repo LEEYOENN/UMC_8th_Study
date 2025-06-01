@@ -39,7 +39,8 @@ jwt:
   token:
     secretKey: umceightfightingjwttokenauthentication
     expiration:
-      access: 14400000
+      access: 14400000 # 4시간
+      refresh: 1209600000 # 2주 (예시)
 monitoring:
   webhook-url: https://discord.com/api/webhooks/1370711644438794343/KEtcqTBiAzQ6W3d7wxkhnBDFL2tWV83Gzg6vHwUcPDm1KlVDZGfV-b3UbvVzMUnTDC8S
 

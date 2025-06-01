@@ -62,6 +62,7 @@ public class MemberResponseDTO {
     public static class LoginResultDTO{
         Long memberId;
         String accessToken;
+        String refreshToken;
     }
 
     @Builder
@@ -72,5 +73,12 @@ public class MemberResponseDTO {
         String name;
         String email;
         String gender;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class TokenReissueResultDTO {
+        private String accessToken;
     }
 }
