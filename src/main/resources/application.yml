@@ -17,6 +17,24 @@ spring:
         hbm2ddl:
           auto: update
         default_batch_fetch_size: 1000
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-authentication-method: client_secret_post
+            client-id: 5be382977a7e8d648237a409e09c08e5
+            client-secret: yiFNKzzjgglI7QKH4YUNitmLQrWONoBl
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            authorization-grant-type: authorization_code
+            scope: profile_nickname
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
 jwt:
   token:
     secretKey: umceightfightingjwttokenauthentication
@@ -24,3 +42,4 @@ jwt:
       access: 14400000
 monitoring:
   webhook-url: https://discord.com/api/webhooks/1370711644438794343/KEtcqTBiAzQ6W3d7wxkhnBDFL2tWV83Gzg6vHwUcPDm1KlVDZGfV-b3UbvVzMUnTDC8S
+
