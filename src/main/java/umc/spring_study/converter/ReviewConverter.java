@@ -3,6 +3,7 @@ package umc.spring_study.converter;
 import org.springframework.data.domain.Page;
 import umc.spring_study.domain.Member;
 import umc.spring_study.domain.Review;
+import umc.spring_study.domain.ReviewImage;
 import umc.spring_study.domain.Store;
 import umc.spring_study.web.dto.ReviewDTO.ReviewRequestDTO;
 import umc.spring_study.web.dto.ReviewDTO.ReviewResponseDTO;
@@ -55,6 +56,13 @@ public class ReviewConverter {
                 .totalElements(reviewList.getTotalElements())
                 .listSize(reviewPreviewListDTO.size())
                 .reviewList(reviewPreviewListDTO)
+                .build();
+    }
+
+    public static ReviewImage toReviewImage(String pictureUrl, Review review) {
+        return ReviewImage.builder()
+                .imageUrl(pictureUrl)
+                .review(review)
                 .build();
     }
 }
