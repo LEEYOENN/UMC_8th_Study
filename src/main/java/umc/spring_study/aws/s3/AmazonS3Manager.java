@@ -49,6 +49,19 @@ public class AmazonS3Manager {
         return amazonConfig.getReviewPath() + '/' + uuid.getUuid() + extension;
     }
 
+    public void deleteFile(String keyName) {
+        if (amazonS3.doesObjectExist(amazonConfig.getBucket(), keyName)) {
+            amazonS3.deleteObject(amazonConfig.getBucket(), keyName);
+            log.info("Deleted file: {}", keyName);
+        } else {
+            log.info("File does not exist: {}", keyName);
+        }
+
+    }
+
+//    public void deleteReviewImage(String uuidWithExtension) {
+//        s3Manager.deleteFile("review/" + uuidWithExtension);
+//    }
 
 
 }
